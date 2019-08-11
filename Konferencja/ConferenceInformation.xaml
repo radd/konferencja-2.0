@@ -1,0 +1,173 @@
+﻿<UserControl x:Class="Konferencja.ConferenceInformation"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Konferencja"
+             mc:Ignorable="d" 
+           d:DesignHeight="533" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style x:Key="speakersListViewTemplate" TargetType="ListView">
+            <Setter Property="SnapsToDevicePixels" Value="true"/>
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled"/>
+            <Setter Property="ScrollViewer.CanContentScroll" Value="False"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListView">
+                        <Grid>
+                            <ItemsPresenter  />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="ItemTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <Grid Background="#fff">
+                            <Grid x:Name="itemWrap" Height="60" Margin="0,7" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="70"/>
+                                    <ColumnDefinition Width="70"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.Resources>
+                                    <Label x:Key="tempLabel" Foreground="#444" FontFamily="/Konferencja;component/Fonts/#Roboto"  />
+                                    <TextBlock x:Key="tempTextBlock" TextTrimming="CharacterEllipsis" FontFamily="/Konferencja;component/Fonts/#Roboto"  />
+
+                                    <Style x:Key="LabelStyle" TargetType="Label">
+                                        <Setter Property="Foreground" 
+                                Value="{Binding Source={StaticResource tempLabel}, Path=Foreground}" />
+                                    </Style>
+                                    <Style x:Key="TextBlockStyle" TargetType="TextBlock">
+                                        <Setter Property="TextTrimming" Value="{Binding Source={StaticResource tempTextBlock}, Path=TextTrimming}" />
+                                        <Setter Property="FontFamily" Value="{Binding Source={StaticResource tempTextBlock}, Path=FontFamily}" />
+                                    </Style>
+
+                                </Grid.Resources>
+                                <Border Grid.Column="0"  Grid.ColumnSpan="3" Background="#fff" CornerRadius="2">
+                                    <Border.BitmapEffect>
+                                        <DropShadowBitmapEffect x:Name="bg_shadow" Color="#aaa"  ShadowDepth="0" Direction="0" Opacity="1" Softness="0"/>
+                                    </Border.BitmapEffect>
+                                </Border>
+                                <StackPanel Grid.Column="0" Margin="10,10,5,10" Orientation="Vertical">
+                                    <WrapPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Name}" FontSize="15"  Foreground="#374e78" Style="{StaticResource TextBlockStyle}"></TextBlock>
+                                        <TextBlock Text="{Binding GetFromTo}" FontSize="12" Margin="10,0,0,0"  Foreground="#999" Style="{StaticResource TextBlockStyle}" VerticalAlignment="Center" ></TextBlock>
+                                    </WrapPanel>
+                                    <WrapPanel Orientation="Horizontal" Margin="0,5">
+                                        <TextBlock  Text="{Binding Title}" Foreground="#666" FontSize="14" Style="{StaticResource TextBlockStyle}" FontStyle="Italic">
+                                            <TextBlock.ToolTip>
+                                                <ToolTip DataContext="{Binding Path=PlacementTarget, RelativeSource={x:Static RelativeSource.Self}}" >
+                                                    <TextBlock Text="Temat przemówienie na jaki temat przekostalisk i już onomatopeja i konk" Style="{StaticResource TextBlockStyle}"/>
+
+                                                </ToolTip>
+                                            </TextBlock.ToolTip>
+                                </TextBlock>
+                                    </WrapPanel>
+                                </StackPanel>
+                                <local:IconButton x:Name="speakerEdit"  Grid.Column="1" Content="Edytuj" Icon="&#xe88b;"  Style="{StaticResource btn_8}"  Cursor="Hand" Click="SpeakerEdit_Click" ></local:IconButton>
+                                <local:IconButton x:Name="speakerDelete" Grid.Column="2" Content="Usuń" Icon="&#xed95;"  Style="{StaticResource btn_8}"  Cursor="Hand" Click="SpeakerDelete_Click" ></local:IconButton>
+
+                            </Grid>
+                        </Grid>
+
+                        <DataTemplate.Triggers>
+                            <EventTrigger RoutedEvent="MouseEnter">
+                                <BeginStoryboard>
+                                    <Storyboard BeginTime="0" >
+                                        <DoubleAnimation Storyboard.TargetName="bg_shadow"
+                                     Storyboard.TargetProperty="Softness"
+                                      To="0.3" Duration="0:0:0.2"/>
+
+                                    </Storyboard>
+                                </BeginStoryboard>
+
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="MouseLeave">
+                                <BeginStoryboard>
+                                    <Storyboard BeginTime="0" >
+                                        <DoubleAnimation Storyboard.TargetName="bg_shadow"
+                                     Storyboard.TargetProperty="Softness"
+                                      To="0" Duration="0:0:0.2"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </DataTemplate.Triggers>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="ItemContainerStyle">
+                <Setter.Value>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="Padding" Value="0"  />
+                        <Setter Property="Margin" Value="0"  />
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Setter Property="Background" Value="#fff"/>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <StackPanel Orientation="Vertical">
+            <Grid Height="80">
+                <StackPanel Margin="15,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Horizontal">
+                </StackPanel>
+                <StackPanel Margin="0,0,15,0" HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal">
+         
+                    <Button x:Name="startConf" Content="Rozpocznij konferencję"  Margin="15,0" Style="{StaticResource btn_1}" Cursor="Hand" FontSize="16" Padding="17,12" FontFamily="/Konferencja;component/Fonts/#Roboto" Click="startConf_Click"   ></Button>
+
+                </StackPanel>
+
+            </Grid>
+            <StackPanel Margin="30,0,30,0" Orientation="Vertical">
+                <WrapPanel Orientation="Horizontal">
+                    <Label Content="&#xe8ae;" FontSize="22" Foreground="#374e78" FontFamily="/Konferencja;component/Fonts/#fontello" VerticalAlignment="Center" ></Label>
+                    <TextBlock x:Name="confName_TextBlock" Foreground="#333" Text="Xxx" Padding="5" FontFamily="/Konferencja;component/Fonts/#Roboto" TextWrapping="Wrap" FontSize="22" VerticalAlignment="Center" ></TextBlock>
+                </WrapPanel>
+                <StackPanel Orientation="Vertical" Margin="30,25,0,0">
+                    <WrapPanel Orientation="Horizontal">
+                        <Label Content="&#xf052;" FontSize="14" Opacity="0.7" Width="25" FontFamily="/Konferencja;component/Fonts/#fontello" VerticalAlignment="Center" HorizontalContentAlignment="Center" ></Label>
+                        <TextBlock x:Name="confTime_TextBlock" Text="00:00 - 00:00" Foreground="#333" FontSize="14" Padding="5" FontFamily="/Konferencja;component/Fonts/#Roboto" TextWrapping="Wrap" VerticalAlignment="Center" ></TextBlock>
+                    </WrapPanel>
+                    <WrapPanel Orientation="Horizontal">
+                        <Label Content="&#xe892;" FontSize="14" Opacity="0.7" Width="25" FontFamily="/Konferencja;component/Fonts/#fontello" VerticalAlignment="Center" HorizontalContentAlignment="Center" ></Label>
+                        <TextBlock x:Name="confDate_TextBlock" Text="Xxxxxx, 00.00.0000" Foreground="#333" FontSize="14" Padding="5" FontFamily="/Konferencja;component/Fonts/#Roboto" TextWrapping="Wrap" VerticalAlignment="Center" ></TextBlock>
+                    </WrapPanel>
+                    <WrapPanel  Orientation="Horizontal">
+                        <Label Content="&#xef3e;" FontSize="14" Opacity="0.7" Width="25" FontFamily="/Konferencja;component/Fonts/#fontello" VerticalAlignment="Center" HorizontalContentAlignment="Center" ></Label>
+                        <TextBlock x:Name="confVenue_TextBlock"  Text="xxx" Foreground="#333" FontSize="14" Padding="5" TextWrapping="Wrap" FontFamily="/Konferencja;component/Fonts/#Roboto" VerticalAlignment="Center" ></TextBlock>
+                    </WrapPanel>
+                    <WrapPanel  Orientation="Horizontal">
+                        <Label Content="&#xed8a;" FontSize="14" Opacity="0.7" Width="25" FontFamily="/Konferencja;component/Fonts/#fontello" VerticalAlignment="Center" HorizontalContentAlignment="Center" ></Label>
+                        <TextBlock x:Name="speakersCount_TextBlock"  Text="Liczba prelegentów: 0" Foreground="#333" FontSize="14" Padding="5" TextWrapping="Wrap" FontFamily="/Konferencja;component/Fonts/#Roboto" VerticalAlignment="Center" ></TextBlock>
+                    </WrapPanel>
+                    <WrapPanel  Orientation="Horizontal" Margin="0,30,0,0">
+                        <Label Content="&#xea1c;" FontSize="14" Opacity="0.7" Width="25" FontFamily="/Konferencja;component/Fonts/#fontello" VerticalAlignment="Center" HorizontalContentAlignment="Center" ></Label>
+                        <TextBlock  Text="Logo" Foreground="#333" FontSize="14" Padding="5" TextWrapping="Wrap" FontFamily="/Konferencja;component/Fonts/#Roboto" VerticalAlignment="Center" ></TextBlock>
+                    </WrapPanel>
+                    <StackPanel Margin="30,15,0,0" MaxWidth="500" MaxHeight="300" HorizontalAlignment="Left" >
+                        <Border BorderBrush="#ddd" BorderThickness="6" >
+                            <Image x:Name="confLogo" Source="Resources/logo1.jpg" ></Image>
+                        </Border>
+                    </StackPanel>
+                    <WrapPanel  Orientation="Horizontal" Margin="0,30,0,0">
+                        <Label Content="&#xed8a;" FontSize="14" Opacity="0.7" Width="25" FontFamily="/Konferencja;component/Fonts/#fontello" VerticalAlignment="Center" HorizontalContentAlignment="Center" ></Label>
+                        <TextBlock  Text="Lista prelegentów" Foreground="#333" FontSize="14" Padding="5" TextWrapping="Wrap" FontFamily="/Konferencja;component/Fonts/#Roboto" VerticalAlignment="Center" ></TextBlock>
+                    </WrapPanel>
+                    <ListView x:Name="speakers_ListView"  Margin="30,10,30,20" Style="{StaticResource speakersListViewTemplate}" ></ListView>
+                    <StackPanel Margin="0,30,0,30" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button x:Name="newSpeaker" Content="Dodaj prelegenta"  Margin="15,0" Style="{StaticResource btn_1}" Cursor="Hand" FontSize="16" Padding="17,12" FontFamily="/Konferencja;component/Fonts/#Roboto" Click="newSpeaker_Click"   ></Button>
+                    </StackPanel>
+                </StackPanel>
+
+            </StackPanel>
+
+        </StackPanel>
+    </Grid>
+</UserControl>

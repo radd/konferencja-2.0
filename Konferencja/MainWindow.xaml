@@ -1,0 +1,29 @@
+﻿<Window x:Class="Konferencja.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Konferencja"
+        mc:Ignorable="d"
+        Title="Konferencja 2.0" MinHeight="666" MinWidth="1000">
+    <DockPanel Name="mainPanel" LastChildFill="True" Background="#eee">
+        <Border x:Name="topBar" DockPanel.Dock="Top" Background="#102E42" Height="250" Padding="0,0,0,60" >
+            <Border.Effect>
+                <DropShadowEffect ShadowDepth="0" Direction="0" Opacity="0.5" BlurRadius="12"/>
+            </Border.Effect>
+
+            <DockPanel LastChildFill="True" Margin="0,20,0,0">
+                <Grid>
+                    <Grid x:Name="logoBar" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="60,0,0,0" MaxWidth="300" Width="Auto">
+                        <Image x:Name="logo2" Source="Resources/logo_l_2.png" Margin="0,-20,0,0" ></Image>
+                        <Image x:Name="logo1" Source="Resources/logo_l_1.png" ></Image>
+                    </Grid>
+                </Grid>
+            </DockPanel>
+        </Border>
+        <DockPanel x:Name="wrap" LastChildFill="True" Margin="0,-60,0,0"></DockPanel>
+
+
+
+    </DockPanel>
+</Window>

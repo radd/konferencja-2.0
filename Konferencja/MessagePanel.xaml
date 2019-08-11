@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="Konferencja.MessagePanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Konferencja"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid Background="#0D000000">
+        <Border BorderBrush="#ddd" BorderThickness="1" CornerRadius="2" Background="#fff" Width="300" VerticalAlignment="Center" HorizontalAlignment="Center" >
+
+            <StackPanel   Orientation="Vertical" >
+                <WrapPanel HorizontalAlignment="Center" Orientation="Horizontal" Margin="10,30,10,15">
+                    <TextBlock  x:Name="messageText" FontSize="14" TextWrapping="Wrap" FontFamily="/Konferencja;component/Fonts/#Roboto"></TextBlock>
+                </WrapPanel>
+                <StackPanel Margin="0,10,0,20" HorizontalAlignment="Center">
+                    <Button x:Name="button" Content="OK"  Margin="15,0" Style="{StaticResource btn_1}" Cursor="Hand" FontSize="14" Padding="17,10" FontFamily="/Konferencja;component/Fonts/#Roboto"   ></Button>
+
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>
